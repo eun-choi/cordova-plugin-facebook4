@@ -309,7 +309,7 @@
         [dialog show];
         return;
     }
-    else if ( [method isEqualToString:@"share_open_graph"] ) {
+    /*else if ( [method isEqualToString:@"share_open_graph"] ) {
         if(!params[@"action"] || !params[@"object"]) {
             NSLog(@"No action or object defined");
             return;
@@ -343,7 +343,7 @@
                                             delegate:nil];
         }
         return;
-    }
+    }*/
     else if ([method isEqualToString:@"apprequests"]) {
         FBSDKGameRequestDialog *dialog = [[FBSDKGameRequestDialog alloc] init];
         dialog.delegate = self;
