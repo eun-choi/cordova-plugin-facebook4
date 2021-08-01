@@ -20,13 +20,13 @@
     <preference name="APP_ID" />
     <preference name="APP_NAME" />
     <preference name="FACEBOOK_HYBRID_APP_EVENTS" default="false" />
-    <preference name="FACEBOOK_ANDROID_SDK_VERSION" default="9.1.1"/>
+    <preference name="FACEBOOK_ANDROID_SDK_VERSION" default="11.1.1"/>
 
     <engines>
         <!-- Requires > 3.5.0 because of the custom Framework tag for iOS [CB-6698] -->
         <!-- Requires > 4.0.0 because of the Framework tag for Android that uses gradle -->
-        <engine name="cordova-android" version=">=3.5.0" />
-        <engine name="cordova-ios" version=">=3.5.0" />
+        <engine name="cordova-android" version=">=7.0.0" />
+        <engine name="cordova-ios" version=">=5.0.0" />
     </engines>
 
     <!-- android -->
@@ -166,9 +166,9 @@
                 <source url="https://cdn.cocoapods.org/"/>
             </config>
             <pods use-frameworks="true">
-                <pod name="FBSDKCoreKit" spec="9.3.0"/>
-                <pod name="FBSDKLoginKit" spec="9.3.0"/>
-                <pod name="FBSDKShareKit" spec="9.3.0"/>
+                <pod name="FBSDKCoreKit" spec="11.0.1"/>
+                <pod name="FBSDKLoginKit" spec="11.0.1"/>
+                <pod name="FBSDKShareKit" spec="11.0.1"/>
             </pods>
         </podspec>
 
