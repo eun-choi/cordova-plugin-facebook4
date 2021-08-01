@@ -21,10 +21,10 @@
     <preference name="APP_NAME" />
     <preference name="FACEBOOK_HYBRID_APP_EVENTS" default="false" />
     <preference name="FACEBOOK_ANDROID_SDK_VERSION" default="11.1.1"/>
+    <preference name="FACEBOOK_IOS_SDK_VERSION" default="11.0.1"/>
+    <preference name="FACEBOOK_BROWSER_SDK_VERSION" default="v9.0" />
 
     <engines>
-        <!-- Requires > 3.5.0 because of the custom Framework tag for iOS [CB-6698] -->
-        <!-- Requires > 4.0.0 because of the Framework tag for Android that uses gradle -->
         <engine name="cordova-android" version=">=7.0.0" />
         <engine name="cordova-ios" version=">=5.0.0" />
     </engines>
