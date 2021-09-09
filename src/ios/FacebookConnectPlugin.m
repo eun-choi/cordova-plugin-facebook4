@@ -86,13 +86,15 @@
 - (void)setApplicationId:(CDVInvokedUrlCommand *)command {
     if ([command.arguments count] == 0) {
         // Not enough arguments
-        [self returnInvalidArgsError:command.callbackId];
+        CDVPluginResult *res = [CDVPluginResult resultWithStatus:CDVCommandStatus_ERROR messageAsString:@"Invalid arguments"];
+        [self.commandDelegate sendPluginResult:res callbackId:command.callbackId];
         return;
     }
     
     NSString *appId = [command argumentAtIndex:0];
     [FBSDKSettings setAppID:appId];
-    [self returnGenericSuccess:command.callbackId];
+    CDVPluginResult* pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK];
+    [self.commandDelegate sendPluginResult:pluginResult callbackId:command.callbackId];
 }
 
 - (void)getApplicationName:(CDVInvokedUrlCommand *)command {
@@ -104,13 +106,15 @@
 - (void)setApplicationName:(CDVInvokedUrlCommand *)command {
     if ([command.arguments count] == 0) {
         // Not enough arguments
-        [self returnInvalidArgsError:command.callbackId];
+        CDVPluginResult *res = [CDVPluginResult resultWithStatus:CDVCommandStatus_ERROR messageAsString:@"Invalid arguments"];
+        [self.commandDelegate sendPluginResult:res callbackId:command.callbackId];
         return;
     }
     
     NSString *displayName = [command argumentAtIndex:0];
     [FBSDKSettings setDisplayName:displayName];
-    [self returnGenericSuccess:command.callbackId];
+    CDVPluginResult* pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK];
+    [self.commandDelegate sendPluginResult:pluginResult callbackId:command.callbackId];
 }
 
 - (void)getLoginStatus:(CDVInvokedUrlCommand *)command {
@@ -155,79 +159,29 @@
 - (void)setAutoLogAppEventsEnabled:(CDVInvokedUrlCommand *)command {
     BOOL enabled = [[command argumentAtIndex:0] boolValue];
     [FBSDKSettings setAutoLogAppEventsEnabled:enabled];
-    [self returnGenericSuccess:command.callbackId];
+    CDVPluginResult *res = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK];
+    [self.commandDelegate sendPluginResult:res callbackId:command.callbackId];
 }
 
 - (void)setAdvertiserIDCollectionEnabled:(CDVInvokedUrlCommand *)command {
     BOOL enabled = [[command argumentAtIndex:0] boolValue];
     [FBSDKSettings setAdvertiserIDCollectionEnabled:enabled];
-    [self returnGenericSuccess:command.callbackId];
+    CDVPluginResult *res = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK];
+    [self.commandDelegate sendPluginResult:res callbackId:command.callbackId];
 }
 
 - (void)setAdvertiserTrackingEnabled:(CDVInvokedUrlCommand *)command {
     BOOL enabled = [[command argumentAtIndex:0] boolValue];
     [FBSDKSettings setAdvertiserTrackingEnabled:enabled];
-    [self returnGenericSuccess:command.callbackId];
-}
-
-- (void)setDataProcessingOptions:(CDVInvokedUrlCommand *)command {
-    if ([command.arguments count] == 0) {
-        // Not enough arguments
-        [self returnInvalidArgsError:command.callbackId];
-        return;
-    }
-
-    NSArray *options = [command argumentAtIndex:0];
-    if ([command.arguments count] == 1) {
-        [FBSDKSettings setDataProcessingOptions:options];
-    } else {
-        NSString *country = [command.arguments objectAtIndex:1];
-        NSString *state = [command.arguments objectAtIndex:2];
-        [FBSDKSettings setDataProcessingOptions:options country:country state:state];  
-    }
-    [self returnGenericSuccess:command.callbackId];
-}
-
-- (void)setUserData:(CDVInvokedUrlCommand *)command {
-    if ([command.arguments count] == 0) {
-        // Not enough arguments
-        [self returnInvalidArgsError:command.callbackId];
-        return;
-    }
-
-    [self.commandDelegate runInBackground:^{
-        NSDictionary *params = [command.arguments objectAtIndex:0];
-
-        if (![params isKindOfClass:[NSDictionary class]]) {
-            CDVPluginResult *res = [CDVPluginResult resultWithStatus:CDVCommandStatus_ERROR messageAsString:@"userData must be an object"];
-            [self.commandDelegate sendPluginResult:res callbackId:command.callbackId];
-            return;
-        } else {
-            [FBSDKAppEvents setUserEmail:(NSString *)params[@"em"] 
-                            firstName:(NSString*)params[@"fn"] 
-                            lastName:(NSString *)params[@"ln"] 
-                            phone:(NSString *)params[@"ph"] 
-                            dateOfBirth:(NSString *)params[@"db"] 
-                            gender:(NSString *)params[@"ge"] 
-                            city:(NSString *)params[@"ct"] 
-                            state:(NSString *)params[@"st"] 
-                            zip:(NSString *)params[@"zp"] 
-                            country:(NSString *)params[@"cn"]];
-        }
-
-        [self returnGenericSuccess:command.callbackId];
-    }];
-}
-
-- (void)clearUserData:(CDVInvokedUrlCommand *)command {
-    [FBSDKAppEvents clearUserData];
-    [self returnGenericSuccess:command.callbackId];
+    CDVPluginResult *res = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK];
+    [self.commandDelegate sendPluginResult:res callbackId:command.callbackId];
 }
 
 - (void)logEvent:(CDVInvokedUrlCommand *)command {
     if ([command.arguments count] == 0) {
         // Not enough arguments
-        [self returnInvalidArgsError:command.callbackId];
+        CDVPluginResult *res = [CDVPluginResult resultWithStatus:CDVCommandStatus_ERROR messageAsString:@"Invalid arguments"];
+        [self.commandDelegate sendPluginResult:res callbackId:command.callbackId];
         return;
     }
 
@@ -235,6 +189,7 @@
         // For more verbose output on logging uncomment the following:
         // [FBSettings setLoggingBehavior:[NSSet setWithObject:FBLoggingBehaviorAppEvents]];
         NSString *eventName = [command.arguments objectAtIndex:0];
+        CDVPluginResult *res;
         NSDictionary *params;
         double value;
 
@@ -255,13 +210,15 @@
                 [FBSDKAppEvents logEvent:eventName valueToSum:value parameters:params];
             }
         }
-        [self returnGenericSuccess:command.callbackId];
+        res = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK];
+        [self.commandDelegate sendPluginResult:res callbackId:command.callbackId];
     }];
 }
 
 - (void)logPurchase:(CDVInvokedUrlCommand *)command {
     if ([command.arguments count] < 2 || [command.arguments count] > 3 ) {
-        [self returnInvalidArgsError:command.callbackId];
+        CDVPluginResult *res = [CDVPluginResult resultWithStatus:CDVCommandStatus_ERROR messageAsString:@"Invalid arguments"];
+        [self.commandDelegate sendPluginResult:res callbackId:command.callbackId];
         return;
     }
 
@@ -276,7 +233,8 @@
             [FBSDKAppEvents logPurchase:value currency:currency parameters:params];
         }
 
-        [self returnGenericSuccess:command.callbackId];
+        CDVPluginResult *res = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK];
+        [self.commandDelegate sendPluginResult:res callbackId:command.callbackId];
     }];
 }
 
@@ -471,7 +429,8 @@
     }
 
     // Else just return OK we are already logged out
-    [self returnGenericSuccess:command.callbackId];
+    CDVPluginResult* pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK];
+    [self.commandDelegate sendPluginResult:pluginResult callbackId:command.callbackId];
 }
 
 - (void) showDialog:(CDVInvokedUrlCommand*)command
@@ -510,33 +469,15 @@
 
     } else if ([method isEqualToString:@"share"] || [method isEqualToString:@"feed"]) {
         // Create native params
+        FBSDKShareLinkContent *content = [[FBSDKShareLinkContent alloc] init];
+        content.contentURL = [NSURL URLWithString:params[@"href"]];
+        content.hashtag = [FBSDKHashtag hashtagWithString:[params objectForKey:@"hashtag"]];
+        content.quote = params[@"quote"];
+
         self.dialogCallbackId = command.callbackId;
         FBSDKShareDialog *dialog = [[FBSDKShareDialog alloc] init];
         dialog.fromViewController = [self topMostController];
-        if (params[@"photo_image"]) {
-        	FBSDKSharePhoto *photo = [[FBSDKSharePhoto alloc] init];
-        	NSString *photoImage = params[@"photo_image"];
-        	if (![photoImage isKindOfClass:[NSString class]]) {
-        		NSLog(@"photo_image must be a string");
-        	} else {
-        		NSData *photoImageData = [[NSData alloc]initWithBase64EncodedString:photoImage options:NSDataBase64DecodingIgnoreUnknownCharacters];
-        		if (!photoImageData) {
-        			NSLog(@"photo_image cannot be decoded");
-        		} else {
-        			photo.image = [UIImage imageWithData:photoImageData];
-        			photo.userGenerated = YES;
-        		}
-        	}
-        	FBSDKSharePhotoContent *content = [[FBSDKSharePhotoContent alloc] init];
-        	content.photos = @[photo];
-        	dialog.shareContent = content;
-        } else {
-        	FBSDKShareLinkContent *content = [[FBSDKShareLinkContent alloc] init];
-        	content.contentURL = [NSURL URLWithString:params[@"href"]];
-        	content.hashtag = [FBSDKHashtag hashtagWithString:[params objectForKey:@"hashtag"]];
-        	content.quote = params[@"quote"];
-        	dialog.shareContent = content;
-        }
+        dialog.shareContent = content;
         dialog.delegate = self;
         // Adopt native share sheets with the following line
         if (params[@"share_sheet"]) {
@@ -722,10 +663,11 @@
             return;
         }
         if (url) {
-            CDVPluginResult *pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK messageAsString:url.absoluteString];
+            CDVPluginResult *pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK messageAsString: url.absoluteString];
             [self.commandDelegate sendPluginResult:pluginResult callbackId:command.callbackId];
         } else {
-            [self returnGenericSuccess:command.callbackId];
+            CDVPluginResult *pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK];
+            [self.commandDelegate sendPluginResult:pluginResult callbackId:command.callbackId];
         }
     }];
 }
@@ -733,20 +675,11 @@
 - (void) activateApp:(CDVInvokedUrlCommand *)command
 {
     [FBSDKAppEvents activateApp];
-    [self returnGenericSuccess:command.callbackId];
+    CDVPluginResult* pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK];
+    [self.commandDelegate sendPluginResult:pluginResult callbackId:command.callbackId];
 }
 
 #pragma mark - Utility methods
-
-- (void) returnGenericSuccess:(NSString *)callbackId {
-    CDVPluginResult* pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK];
-    [self.commandDelegate sendPluginResult:pluginResult callbackId:callbackId];
-}
-
-- (void) returnInvalidArgsError:(NSString *)callbackId {
-    CDVPluginResult *res = [CDVPluginResult resultWithStatus:CDVCommandStatus_ERROR messageAsString:@"Invalid arguments"];
-    [self.commandDelegate sendPluginResult:res callbackId:callbackId];
-}
 
 - (void) returnLoginError:(NSString *)callbackId:(NSString *)errorCode:(NSString *)errorMessage {
     NSMutableDictionary *response = [[NSMutableDictionary alloc] init];
