@@ -107,7 +107,7 @@
         [self returnInvalidArgsError:command.callbackId];
         return;
     }
-
+    
     NSString *clientToken = [command argumentAtIndex:0];
     [FBSDKSettings setClientToken:clientToken];
     [self returnGenericSuccess:command.callbackId];
