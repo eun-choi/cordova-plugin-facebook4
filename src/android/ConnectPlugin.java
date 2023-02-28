@@ -35,7 +35,7 @@ import com.facebook.share.model.ShareHashtag;
 import com.facebook.share.model.ShareLinkContent;
 import com.facebook.share.model.SharePhoto;
 import com.facebook.share.model.SharePhotoContent;
-import com.facebook.share.widget.GameRequestDialog;
+import com.facebook.gamingservices.GameRequestDialog;
 import com.facebook.share.widget.MessageDialog;
 import com.facebook.share.widget.ShareDialog;
 
@@ -250,12 +250,6 @@ public class ConnectPlugin extends CordovaPlugin {
         // Developers can observe how frequently users activate their app by logging an app activation event.
         AppEventsLogger.activateApp(cordova.getActivity().getApplication());
     }
-
-    /*@Override
-    public void onPause(boolean multitasking) {
-        super.onPause(multitasking);
-        AppEventsLogger.deactivateApp(cordova.getActivity().getApplication());
-    }*/
 
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent intent) {
