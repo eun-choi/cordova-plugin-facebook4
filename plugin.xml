@@ -26,7 +26,7 @@
     <preference name="FACEBOOK_HYBRID_APP_EVENTS" default="false" />
     <preference name="FACEBOOK_ADVERTISER_ID_COLLECTION" default="true" />
     <preference name="FACEBOOK_ANDROID_SDK_VERSION" default="16.3.0"/>
-    <preference name="FACEBOOK_IOS_SDK_VERSION" default="16.4.0"/>
+    <preference name="FACEBOOK_IOS_SDK_VERSION" default="17.0.1"/>
     <preference name="FACEBOOK_BROWSER_SDK_VERSION" default="v16.0" />
 
     <engines>
@@ -198,10 +198,10 @@
                 <source url="https://cdn.cocoapods.org/"/>
             </config>
             <pods use-frameworks="true">
-                <pod name="FBSDKCoreKit" spec="16.4.0"/>
-                <pod name="FBSDKLoginKit" spec="16.4.0"/>
-                <pod name="FBSDKShareKit" spec="16.4.0"/>
-                <pod name="FBSDKGamingServicesKit" spec="16.4.0"/>
+                <pod name="FBSDKCoreKit" spec="17.0.1"/>
+                <pod name="FBSDKLoginKit" spec="17.0.1"/>
+                <pod name="FBSDKShareKit" spec="17.0.1"/>
+                <pod name="FBSDKGamingServicesKit" spec="17.0.1"/>
             </pods>
         </podspec>
 
