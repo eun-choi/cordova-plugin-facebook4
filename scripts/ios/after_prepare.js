@@ -79,7 +79,7 @@ module.exports = function (context) {
     var common = context.requireCordovaModule('cordova-common'), 
     util = context.requireCordovaModule('cordova-lib/src/cordova/util'), 
     projectName = new common.ConfigParser(util.projectConfig(util.isCordova())).name(), 
-    plistPath = './platforms/ios/' + projectName + '/' + projectName + '-Info.plist'
+    plistPath = './platforms/ios/App/App-Info.plist'
     return plistPath
   }
 
